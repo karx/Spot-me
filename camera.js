@@ -14,11 +14,7 @@
  * limitations under the License.
  * =============================================================================
  */
-import * as posenet from '@tensorflow-models/posenet';
-import dat from 'dat.gui';
-import Stats from 'stats.js';
-
-import {drawBoundingBox, drawKeypoints, drawSkeleton, isMobile, toggleLoadingUI, tryResNetButtonName, tryResNetButtonText, updateTryResNetButtonDatGuiCss} from './demo_util';
+import {drawBoundingBox, drawKeypoints, drawSkeleton, isMobile, toggleLoadingUI, tryResNetButtonName, tryResNetButtonText, updateTryResNetButtonDatGuiCss} from './demo_utils.js';
 
 const videoWidth = 600;
 const videoHeight = 500;
@@ -279,8 +275,8 @@ function setupGui(cameras, net) {
  * Sets up a frames per second panel on the top-left of the window
  */
 function setupFPS() {
-  stats.showPanel(0);  // 0: fps, 1: ms, 2: mb, 3+: custom
-  document.getElementById('main').appendChild(stats.dom);
+//   stats.showPanel(0);  // 0: fps, 1: ms, 2: mb, 3+: custom
+//   document.getElementById('main').appendChild(stats.dom);
 }
 
 /**
@@ -425,6 +421,12 @@ function detectPoseInRealTime(video, net) {
     // scores
     poses.forEach(({score, keypoints}) => {
       if (score >= minPoseConfidence) {
+        console.log({score,keypoints});
+        
+        left_shldr = keypoints[5];
+        right_shldr = keypoints[6];
+
+        
         if (guiState.output.showPoints) {
           drawKeypoints(keypoints, minPartConfidence, ctx);
         }
@@ -435,6 +437,7 @@ function detectPoseInRealTime(video, net) {
           drawBoundingBox(keypoints, ctx);
         }
       }
+    //   console.log(score,keypoints);
     });
 
     // End monitoring code for frames per second
