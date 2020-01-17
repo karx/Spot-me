@@ -21,11 +21,10 @@ const videoHeight = 500;
 const stats = new Stats();
 
 let dev_id = '1111';
-function updateDeviceId() {
+document.getElementById('btn-click').onclick =  () => {
     dev_id = document.getElementById('connection_code').value;
     console.log(`Device Id set to ${dev_id}`);
-}
-
+};
 var ID = function() {
     // Math.random should be unique because of its seeding algorithm.
     // Convert it to base 36 (numbers + letters), and grab the first 9 characters
@@ -508,9 +507,9 @@ function detectPoseInRealTime(video, net) {
                             distanceBtwPointsSq(left_wrist.position, mid_point_left) < bounding_radius_sq
                         ) {
                             console.log('Pointing With Left');
-                            // alert('LEft point Detected');
+                            alert('LEft point Detected');
                             let message = new Paho.Message("Left");
-                            message.destinationName = `spot-me/${dev_id}/detected`;
+                            message.destinationName = `spot-me/${dev_id}/connected`;
                             client.send(message);
                             // client.send()
                         }
@@ -525,8 +524,10 @@ function detectPoseInRealTime(video, net) {
                             distanceBtwPointsSq(right_wrist.position, mid_point_right) < bounding_radius_sq
                         ) {
                             console.log('Pointing With right');
+                            alert('Right point Detected');
+
                             let message = new Paho.Message("Right");
-                            message.destinationName = `spot-me/${dev_id}/detected`;
+                            message.destinationName = `spot-me/${dev_id}/connected`;
                             client.send(message);
                         }
                     }
