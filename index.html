@@ -10,6 +10,9 @@
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.6/dat.gui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r16/Stats.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/paho-mqtt.js"></script>
+    <script src="device_form.js"></script>
+
 </head>
 <body>
     <div id="info" style='display:none'>
@@ -30,6 +33,9 @@
         </video>
         <canvas id="output" />
     </div>
+    <input type="number" aria-label="Connection Code" id="connection_code">
+    <button value="Connect" onclick="updateDeviceId()">Connect</button>
+
     <script src="camera.js" type="module"></script>
 </body>
 </html>
