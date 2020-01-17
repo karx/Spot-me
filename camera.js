@@ -421,12 +421,58 @@ function detectPoseInRealTime(video, net) {
     // scores
     poses.forEach(({score, keypoints}) => {
       if (score >= minPoseConfidence) {
-        console.log({score,keypoints});
+        // console.log({score,keypoints});
         
-        left_shldr = keypoints[5];
-        right_shldr = keypoints[6];
+        let left_shldr = keypoints[5];
+        let right_shldr = keypoints[6];
+
+        let left_elb = keypoints[7];
+        let right_elb = keypoints[8];
+
+        let left_wrist = keypoints[9];
+        let right_wrist = keypoints[10];
+
+        let left_hip = keypoints[11];
+        let right_hip = keypoints[12];
 
         
+        let minScoreReq = 0.888;
+        if(left_shldr.score >= minScoreReq && right_shldr.score >=  minScoreReq) {
+            //  && left_hip.score >= minScoreReq && right_hileft_hip.score >= minScoreReq) {
+            let x_shldr_diff = right_shldr.position.x - left_shldr.position.x;
+            // let y_height_diff = right_shldr.position.y - right_hip.position.y;
+            //TODO: kaaro Confirm Absolute never needed or use
+
+            let bounding_radius = 0.4 * x_shldr_diff;
+            let bounding_radius_sq = bounding_radius*bounding_radius;
+
+            if(left_wrist.score >= minScoreReq && left_elb.score>= minScoreReq) { 
+                let mid_x_left = (left_shldr.position.x + left_elb.position.x + left_wrist.position.x)/3;
+                let mid_y_left = (left_shldr.position.y + left_elb.position.y + left_wrist.position.y)/3;
+                let mid_point_left = {x: mid_x_left, y: mid_y_left};
+                if(
+                    distanceBtwPointsSq(left_shldr.position, mid_point_left) < bounding_radius_sq && 
+                    distanceBtwPointsSq(left_elb.position, mid_point_left) < bounding_radius_sq && 
+                    distanceBtwPointsSq(left_wrist.position, mid_point_left) < bounding_radius_sq 
+                    ) { 
+                        console.log('Pointing With Left');
+                        alert('LEft point Detected');
+                    }
+                }
+            if ( right_wrist.score >= minScoreReq && right_elb.score >= minScoreReq) {
+                let mid_x_right = (right_shldr.position.x + right_elb.position.x + right_wrist.position.x)/3;
+                let mid_y_right = (right_shldr.position.y + right_elb.position.y + right_wrist.position.y)/3;
+                let mid_point_right = {x: mid_x_right, y: mid_y_right};
+                if(
+                    distanceBtwPointsSq(right_shldr.position, mid_point_right) < bounding_radius_sq && 
+                    distanceBtwPointsSq(right_elb.position, mid_point_right) < bounding_radius_sq && 
+                    distanceBtwPointsSq(right_wrist.position, mid_point_right) < bounding_radius_sq 
+                    ) { 
+                        console.log('Pointing With right');
+                        alert('right point Detected');
+                    }
+            }
+        }
         if (guiState.output.showPoints) {
           drawKeypoints(keypoints, minPartConfidence, ctx);
         }
@@ -449,6 +495,9 @@ function detectPoseInRealTime(video, net) {
   poseDetectionFrame();
 }
 
+function distanceBtwPointsSq(a,b) {
+    return (Math.pow(b.y - a.y, 2) + Math.pow(b.x - a.x, 2));
+}
 /**
  * Kicks off the demo by loading the posenet model, finding and loading
  * available camera devices, and setting off the detectPoseInRealTime function.
