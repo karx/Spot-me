@@ -23,6 +23,7 @@ const stats = new Stats();
 let dev_id = '1111';
 document.getElementById('btn-click').onclick =  () => {
     dev_id = document.getElementById('connection_code').value;
+    sendConformationToMobile();
     console.log(`Device Id set to ${dev_id}`);
 };
 var ID = function() {
@@ -69,6 +70,12 @@ function onConnectionLost(responseObject) {
 // called when a message arrives
 function onMessageArrived(message) {
     console.log("onMessageArrived:" + message.payloadString);
+}
+
+function sendConformationToMobile(message_in) {
+    let message = new Paho.Message('Connected to Device ID');
+    message.destinationName = `spot-me/${dev_id}/connected`;
+    client.send(message);
 }
 
 /**
@@ -507,10 +514,12 @@ function detectPoseInRealTime(video, net) {
                             distanceBtwPointsSq(left_wrist.position, mid_point_left) < bounding_radius_sq
                         ) {
                             console.log('Pointing With Left');
-                            alert('LEft point Detected');
+                            // alert('LEft point Detected');
                             let message = new Paho.Message("Left");
-                            message.destinationName = `spot-me/${dev_id}/connected`;
+                            message.destinationName = `spot-me/${dev_id}/detected`;
                             client.send(message);
+                            showHandSignal();
+
                             // client.send()
                         }
                     }
@@ -524,11 +533,13 @@ function detectPoseInRealTime(video, net) {
                             distanceBtwPointsSq(right_wrist.position, mid_point_right) < bounding_radius_sq
                         ) {
                             console.log('Pointing With right');
-                            alert('Right point Detected');
+                            // alert('Right point Detected');
 
                             let message = new Paho.Message("Right");
-                            message.destinationName = `spot-me/${dev_id}/connected`;
+                            message.destinationName = `spot-me/${dev_id}/detected`;
                             client.send(message);
+                            showHandSignal();
+
                         }
                     }
                 }
@@ -587,6 +598,16 @@ export async function bindPage() {
     setupGui([], net);
     setupFPS();
     detectPoseInRealTime(video, net);
+}
+
+function showHandSignal() {
+    var pointer = document.getElementById('the-pointer-to-show');
+  pointer.style.display = "block";
+  setTimeout(() => {
+      pointer.style.display = "none";
+  }, 1500); 
+//   pointer.style.display = "none";
+  
 }
 
 navigator.getUserMedia = navigator.getUserMedia ||

@@ -1,4 +1,16 @@
-
+body {
+    position: relative;
+}
+#the-pointer-to-show {
+    /* display: none; */
+    font-size: 50em ;
+    position: absolute;
+    top:0px;
+    right:10px;
+}
+.dg {
+    display: none;
+}
 .footer {
     position: fixed;
     left: 0;
