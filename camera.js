@@ -39,7 +39,7 @@ var ID = function() {
   };
 var client = new Paho.Client(
     "wss://api.akriya.co.in:8084/mqtt",
-    `clientId-spot-me-device-${ID}`
+    `clientId-spot-me-device-${ID()}`
 );
 
 // set callback handlers
