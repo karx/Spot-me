@@ -3,7 +3,7 @@ body {
 }
 #the-pointer-to-show {
     /* display: none; */
-    font-size: 50em ;
+    font-size: 16em ;
     position: absolute;
     top:0px;
     right:10px;
