@@ -2,7 +2,7 @@ body {
     position: relative;
 }
 #the-pointer-to-show {
-    /* display: none; */
+    display: none;
     font-size: 16em ;
     position: absolute;
     top:0px;
