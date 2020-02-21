@@ -6,18 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Spot-Me</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/paho-mqtt.js"></script>
     
 
 </head>
 <body>
     <div id="connect-div" class="connect-div full-div">
-        <input type="number" name="connection-div">
+        <input id="connection_code" type="number" name="connection-div">
+        <button id="btn-click">Start Connection</button>
     </div>
     <div id="stream-div" class="stream-div full-div">
         <video id="stream-vid" src="https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4"></video>
     </div>
     <div id="overlay-div" class="overlay-div full-div">
-
+        <video id="overlay-vid" src=""></video>
     </div>
     <script src="kaaro.js"></script>
 </body>
