@@ -6,37 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Spot-Me</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script> 
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.6/dat.gui.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r16/Stats.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/paho-mqtt.js"></script>
+    
 
 </head>
 <body>
-    <div id="info" style='display:none'>
+    <div id="connect-div" class="connect-div full-div">
+        <input type="number" name="connection-div">
     </div>
-    <div id="loading" style='display:flex'>
-        <div class="spinner-text">
-            Loading PoseNet model...
-        </div>
-        <div class="sk-spinner sk-spinner-pulse"></div>
+    <div id="stream-div" class="stream-div full-div">
+        <video id="stream-vid" src="https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4"></video>
     </div>
-    <div id='main' style='display:none' aria-label="Camera Feed with overlay for visual feedback">
-        <video id="video" playsinline style=" -moz-transform: scaleX(-1);
-        -o-transform: scaleX(-1);
-        -webkit-transform: scaleX(-1);
-        transform: scaleX(-1);
-        display: none;
-        ">
-        </video>
-        <canvas id="output" />
+    <div id="overlay-div" class="overlay-div full-div">
+
     </div>
-    <input type="number" aria-label="Connection Code" id="connection_code">
-    <button value="Connect" id="btn-click">Connect</button>
-    <div id="the-pointer-to-show" aria-label="visual feedback of point">
-        ☝
-    </div>
-    <script src="camera.js" type="module"></script>
+    <script src="kaaro.js"></script>
 </body>
 </html>
