@@ -13,10 +13,16 @@ var adMatrix = {
         }
     ],
     "insurace": [
-
+        {
+            src: "./small.mp4",
+            length: 6
+        }
     ],
     "food" : [
-
+        {
+            src: "./dolbycanyon.mp4",
+            length: 25
+        }
     ]
 };
 
@@ -78,15 +84,15 @@ var ID = function () {
             .substr(2, 9)
     );
 };
-// var client = new Paho.Client("wss://api.akriya.co.in:8084/mqtt",
-//     `clientId-adEngine-onPrem-${ID()}`
-// );
+var client = new Paho.Client("wss://api.akriya.co.in:8084/mqtt",
+    `clientId-adEngine-onPrem-${ID()}`
+);
 
-var client = new Paho.Client(
-    "api.akriya.co.in",
-    8083,
-    `clientId-91springboard_${ID}`
-  );
+// var client = new Paho.Client(
+//     "api.akriya.co.in",
+//     8083,
+//     `clientId-91springboard_${ID}`
+//   );
 
 // set callback handlers
 client.onConnectionLost = onConnectionLost;
@@ -121,6 +127,10 @@ function onMessageArrived(message) {
         }
     } else if (message.topic === `adEngine/${number}/connected`) {
         // onConnectionDone();
+    } else if (message.topic === `adEngine/${number}/profile`) {
+        pref = message.payloadString;
+        console.log('setting new profile');
+        showNewProfile();
     }
     console.log("onMessageArrived:" + message.payloadString);
 }
@@ -136,6 +146,7 @@ function sendConformationToMobile(message_in) {
 function subToRequiredTopics(number) {
     client.subscribe(`adEngine/${number}/connected`);
     client.subscribe(`adEngine/${number}/controls`);
+    client.subscribe(`adEngine/${number}/profile`);
 }
 
 let dev_id = '1111';
@@ -146,3 +157,17 @@ document.getElementById('btn-click').onclick =  () => {
     sendConformationToMobile(dev_id);
     console.log(`Device Id set to ${dev_id}`);
 };
+
+
+function showNewProfile() {
+    document.getElementById('notify').innerHTML =`Profile Set to ${pref}`;
+    document.getElementById('notify').style.display = 'block';
+    
+    setTimeout(hideNotify, 1000);
+}
+
+function hideNotify() {
+    document.getElementById('notify').style.display = 'none';
+
+}
+        

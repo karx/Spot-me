@@ -14,3 +14,12 @@ body {
     height: 100%;
     width: 100%;
 }
+
+#notify { 
+    display: none;
+    position: absolute;
+    font-size: 20px;
+    top: 15px;
+    left: 200px;
+    z-index: 100;
+}
