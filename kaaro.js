@@ -57,6 +57,16 @@ function onInterupt() {
 
 }
 
+function startFromTheTop() {
+    document.getElementById('connect-div').style.display='none';
+    document.getElementById('stream-div').style.display='block';
+    document.getElementById('overlay-div').style.display='none';
+    document.getElementById('overlay-vid').pause();
+    document.getElementById('overlay-vid').currentTime = 0;
+    document.getElementById('stream-vid').currentTime = 0;
+    document.getElementById('stream-vid').play();
+}
+
 function resumePlayback() {
     document.getElementById('connect-div').style.display='none';
     document.getElementById('stream-div').style.display='block';
@@ -131,6 +141,12 @@ function onMessageArrived(message) {
         pref = message.payloadString;
         console.log('setting new profile');
         showNewProfile();
+    } else if (message.topic === 'adEngine/all/controls') {
+        if(message.payloadString === `play-ad`) {
+            onInterupt();
+        } else if (message.payloadString === 'start-start') {
+            startFromTheTop();
+        }
     }
     console.log("onMessageArrived:" + message.payloadString);
 }
@@ -147,6 +163,7 @@ function subToRequiredTopics(number) {
     client.subscribe(`adEngine/${number}/connected`);
     client.subscribe(`adEngine/${number}/controls`);
     client.subscribe(`adEngine/${number}/profile`);
+    client.subscribe(`adEngine/all/controls`);
 }
 
 let dev_id = '1111';
