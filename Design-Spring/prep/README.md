@@ -18,6 +18,7 @@ Plan for Day 1: [Day 1 Plan](./day-1)
 ## Week 3
 * Shortlist Solution(s) to Build
 * Prototype Naming
+* Decide Tradeoff Target
 
 ## Week 4
 * A development Sprint
