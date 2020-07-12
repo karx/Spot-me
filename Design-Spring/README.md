@@ -3,10 +3,10 @@ Performed for Spot Me project
 
 ## Week 1
 * Don't think of Solutions Today
-   we share Information - Create Shared Understanding
+* we share Information - Create Shared Understanding
 * And finally pick a Target!
 
-Plan for Day 1: [Day 1 Plan](./day-1)
+Plan for Day 1: [Day 1 Plan](./prep/day-1)
 
 ## Week 2
 * Review great Existing Solutions
